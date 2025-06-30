@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <style>
+        body{font-family:Arial, sans-serif; margin:40px;}
+        table{border-collapse:collapse; width:100%;}
+        th,td{border:1px solid #ccc; padding:8px;}
+        a.button{padding:4px 8px; background:#0288d1; color:#fff; text-decoration:none;}
+    </style>
+</head>
+<body>
+<h2>Customers</h2>
+<table id="table">
+    <thead>
+        <tr><th>SSN</th><th>Name</th><th>Email</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+async function load(){
+    const res = await fetch('listCustomers');
+    const data = await res.json();
+    const tbody = document.querySelector('#table tbody');
+    tbody.innerHTML='';
+    data.forEach(c=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${c.ssn}</td><td>${c.name}</td><td>${c.email}</td>`+
+            `<td><a href="edit_customer.html?ssn=${c.ssn}" class='button'>Edit</a></td>`;
+        tbody.appendChild(tr);
+    });
+}
+load();
+</script>
+</body>
+</html>
